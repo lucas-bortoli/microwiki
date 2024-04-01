@@ -1,5 +1,9 @@
 @import url("../node_modules/normalize.css/normalize.css");
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   margin: 0;
@@ -12,6 +16,5 @@ body {
 #app {
   width: 100lvw;
   height: 100lvh;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
 }

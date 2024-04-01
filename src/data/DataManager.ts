@@ -1,43 +1,44 @@
-interface WikiData {
+export interface SerializedWikiData {
   version: 1;
   title: string;
   articles: {
     id: string;
     title: string;
     content: string;
-    assets: {
-      id: string;
-      name: string;
-      mimeType: string;
-      content: Uint8Array;
-    }[];
+  }[];
+  assets: {
+    id: string;
+    name: string;
+    mimeType: string;
+    size: number;
+    contentBase64: string;
   }[];
 }
 
-const defaultWikiData: WikiData = {
+export const defaultWikiData: SerializedWikiData = {
   version: 1,
   title: "My New Wiki",
   articles: [
     {
       id: crypto.randomUUID(),
       title: "Getting started",
-      content: `# Hello World!`,
-      assets: [],
+      content: `# Hello World!\n[Open DuckDuckGo](https://duckduckgo.com)`,
     },
   ],
+  assets: [],
 };
 
-export function getInitial() {
+export function getStored() {
   const storedData = document.querySelector("#data-store")?.textContent;
 
   if (typeof storedData === "string") {
-    return JSON.parse(storedData) as WikiData;
+    return JSON.parse(storedData) as SerializedWikiData;
   }
 
   return structuredClone(defaultWikiData);
 }
 
-export function save(wikiData: WikiData) {
+export function save(wikiData: SerializedWikiData) {
   const fileContents: string[] = [];
 
   const $ = document.querySelector.bind(document);
