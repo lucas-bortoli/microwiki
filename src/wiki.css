@@ -1,0 +1,17 @@
+@import url("../node_modules/normalize.css/normalize.css");
+
+html,
+body {
+  margin: 0;
+  background: #f0f0f0;
+  width: 100lvw;
+  height: 100lvh;
+  overflow: hidden;
+}
+
+#app {
+  width: 100lvw;
+  height: 100lvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
