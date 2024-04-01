@@ -13,6 +13,10 @@ export default function App() {
     setIsSaving(false);
   }
 
+  async function newArticle() {
+    context.createNewArticle();
+  }
+
   // Previnir usuário de sair da página caso haja uma alteração pendente
   useEffect(() => {
     function onBeforeUnload(event: Event) {
@@ -34,7 +38,7 @@ export default function App() {
         <div class="flex flex-wrap gap-1">
           <button
             class="border border-zinc-400 bg-zinc-100 px-2 hover:bg-zinc-50 active:translate-x-px active:translate-y-px active:bg-zinc-200"
-            onClick={() => context.createNewArticle()}>
+            onClick={newArticle}>
             Add article
           </button>
           {context.hasUnsavedChanges ? (
@@ -48,9 +52,14 @@ export default function App() {
         </div>
       </aside>
       <main class="h-full w-8/12 max-w-screen-lg overflow-y-auto p-8">
-        {context.articles.map((article) => (
-          <Article key={article.id} title={article.title} content={article.content} />
-        ))}
+        {context.visibleArticles.map((articleId) => {
+          const article = context.articles.find((ar) => ar.id === articleId);
+          if (!article) {
+            return null;
+          }
+
+          return <Article key={article.id} title={article.title} content={article.content} />;
+        })}
       </main>
     </div>
   );

@@ -15,7 +15,7 @@ export interface SerializedWikiData {
   }[];
 }
 
-export const defaultWikiData: SerializedWikiData = {
+const defaultWikiData: SerializedWikiData = {
   version: 1,
   title: "My New Wiki",
   articles: [
@@ -47,14 +47,15 @@ export function save(wikiData: SerializedWikiData) {
   // Copy over our tags
   fileContents.push(
     "<!DOCTYPE html>",
+    '<meta charset="UTF-8" />',
+    '<script type="application/json" id="data-store">',
+    JSON.stringify(wikiData),
+    "</script>",
     $("head > title")!.outerHTML,
     ...$$("head > meta").map((meta) => meta.outerHTML),
     ...$$("head > link").map((link) => link.outerHTML),
     ...$$("head > style").map((style) => style.outerHTML),
     ...$$("head > script[type='module']").map((script) => script.outerHTML),
-    '<script type="application/json" id="data-store">',
-    JSON.stringify(wikiData),
-    "</script>",
     '<div id="app"></div>'
   );
 
